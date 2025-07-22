@@ -1,0 +1,27 @@
+{examples}
+
+[SCHEMA]
+{schema}
+
+[CONTEXT]
+{context}
+
+[USER QUESTION]
+{question}
+
+---
+
+### Cypher Generation Instructions
+
+• Generate exactly one valid Cypher query starting with `MATCH` and ending with a semicolon.  
+• Match the most specific node label first (e.g. `WaterProductionWell`, `OilProductionWellGasLift`, `Formation`, etc.).  
+• Use only relationships defined in [SCHEMA] and suggested by [CONTEXT].  
+• For optional data (has_formation, has_welltest, hasdocument, has_wellbore), use OPTIONAL MATCH.  
+• Return only meaningful fields:  
+  – Scalars: code, name, desc, facility, formation, typelabel, wellStatus, etc.  
+  – Collections: use `collect(DISTINCT x)` for lists.  
+  – To label nodes dynamically: `labels(n)[0] AS NodeType`.  
+• If there is no valid path, output exactly:  
+  MATCH () RETURN 'No matching data for the question';  
+
+Output must be _only_ that single Cypher statement—no backticks, no step numbers, no commentary.

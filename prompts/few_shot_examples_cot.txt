@@ -1,0 +1,22 @@
+--- few_shot_examples_cot.txt ---
+### Chain-of-Thought Template:
+1. Restate the user’s question.
+2. Identify node labels & properties.
+3. Determine relationships to traverse.
+4. Specify filter conditions.
+5. Assemble MATCH/OPTIONAL MATCH clauses.
+6. Decide RETURN, ORDER BY, LIMIT.
+7. Output *only* the final Cypher query.
+
+Examples:
+
+User question: “What injection wells exist?”
+→ Step 1: Look for node types with "Injection"
+→ Step 2: Filter by labels: WaterInjectionWell, CuttingsInjectionWell
+→ Step 3: Return well `code`, `name`, and optionally `formation`
+
+User question: "Show documents for Brage"
+→ Step 1: Recognize Brage as a Facility
+→ Step 2: Use label `Facility` and property `name`
+→ Step 3: Traverse `hasdocument` to `Document`
+→ Step 4: Return document name, type, category

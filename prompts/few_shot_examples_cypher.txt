@@ -1,0 +1,55 @@
+````text
+### Examples of correct Cypher queries:
+
+1) Latest Well Trends:
+```cypher
+MATCH (d:Document)-[:HAS_VERSION]->(v:EI_VERSION)
+WHERE d.typelabel = 'Well Trends' 
+  AND v.ei_version_last = true
+RETURN d.code                             AS DocumentCode,
+       v.ei_version_pid                    AS VersionPID,
+       v.ei_version_validfrom              AS ValidFrom,
+       v.ei_version_validuntil             AS ValidUntil;
+````
+
+2. Formation ‘Fensfjord’ Version Count:
+
+```cypher
+MATCH (f:Formation {code: 'Fensfjord'})-[:HAS_VERSION]->(v:EI_VERSION)
+RETURN f.code               AS FormationCode,
+       count(v)             AS VersionCount
+ORDER BY VersionCount DESC;
+```
+
+3. Wells with WHP measurement:
+
+```cypher
+MATCH (w:WaterProductionWell)
+OPTIONAL MATCH (w)-[:has_welltest]->(t:WellTestResults)
+WHERE t.measurement__WellTest_WHP IS NOT NULL
+RETURN labels(w)[0]               AS WellType,
+       w.code                      AS WellCode,
+       t.measurement__WellTest_WHP AS WHP;
+```
+
+
+
+5. All Formations:
+
+```cypher
+MATCH (f:Formation)
+RETURN f.code AS FormationCode,
+       f.name AS FormationName;
+```
+
+6. Production Wells (direct label):
+
+```cypher
+MATCH (w:OilProductionWellGasLift)
+RETURN labels(w)[0] AS WellType,
+       w.code       AS WellCode;
+```
+
+
+
+```
